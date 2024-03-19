@@ -20,7 +20,7 @@ markCtrl.addmarks = async (req, res) => {
             "title",
             "class",
             "results",
-            "marks"
+            // "marks"
         ]);
         // console.log(body)
         // console.log(req.body,"check")
@@ -58,6 +58,7 @@ markCtrl.updateMarks = async (req, res) => {
 
         // Find the index of the student in the results array
         const studentIndex = mark.results.findIndex(item => item.studentId.toString() === sId);
+        // console.log(mark.results, "result")
         if (studentIndex === -1) {
             return res.status(404).json({ error: 'Student not found in marks' });
         }
@@ -135,19 +136,17 @@ markCtrl.markofStudent = async (req, res) => {
             return res.status(404).json({ error: "No marks associated with that student" });
         }
 
-        // Filter out only the marks of the specified student
         const studentMarks = classMarks.results.find(result => result.studentId.toString() === studentid);
 
         if (!studentMarks) {
-            // Return an error if the student's marks are not found
+          
             return res.status(404).json({ error: "Student's marks not found" });
         }
 
-        // Return the _id of the marks card along with the student's marks
         res.status(200).json({ marksCardId: classMarks._id, studentMarks });
     } catch (e) {
         console.log(e);
-        res.status(500).json({ error: "Internal server error" }); // Return error response
+        res.status(500).json({ error: "Internal server error" }); 
     }
 };
 
